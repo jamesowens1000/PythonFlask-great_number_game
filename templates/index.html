@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Great Number Game</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+        <style>
+            #main{
+                height: 500px;
+                width: 800px;
+                margin: 50px;
+                padding: 50px;
+                border: 1px solid black;
+                text-align: center;
+            }
+            .box{
+                color: white;
+                border: 2px solid black;
+                font-weight: bold;
+                text-align: center;
+                height: 200px;
+                width: 200px;
+                margin: 15px 250px;
+                padding-top: 80px;
+            }
+            .no_win{
+                background-color: #CE2818;
+            }
+            .win{
+                background-color: #009E12;
+            }
+            button{
+                border: 2px solid black;
+                margin-top: 15px;
+            }
+            input{
+                margin-top: 5px;
+                text-align: center;
+            }
+            a, a:hover{
+                color: black;
+                text-decoration: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="main">
+            <h4>Welcome to the Great Number Game!</h4>
+            <h6>I am thinking of a number between 1 and 100</h6>
+            <h5>Take a guess!</h5>
+            {% if status == 'low': %}
+                <div class="box no_win">Too Low!</div>
+            {% elif status == 'high': %}
+                <div class="box no_win">Too High!</div>
+            {% elif status == 'lose': %}
+                <div class="box no_win">
+                    <p>You Lose</p>
+                    <button type="button"><a href="/destroy_session">Try again?</a></button>
+                </div>
+            {% elif status == 'win': %}
+                <div class="box win">
+                    <p>
+                        {{ randNum }} was the number!
+                        Guess Attempts: {{ guesses }}
+                    </p>
+                    <button type="button"><a href="/destroy_session">Play again!</a></button>
+                </div>
+            {% endif %}
+            {% if status != 'win' and status != 'lose': %}
+            <form action='/guess' method='post'>
+                <input type="number" name="guess-value" min="1" max="100">
+                <input type="submit" value="Submit">
+            </form>
+            {% endif %}
+        </div>
+    </body>
+</html>
